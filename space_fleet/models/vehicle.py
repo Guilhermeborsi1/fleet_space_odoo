@@ -10,7 +10,6 @@ class SpaceFleetVehicle(models.Model):
     name = fields.Char(string="Nome", required=True)
     manufacturer = fields.Char(string="Fabricante")
     year = fields.Integer(string="Ano")
-    cls = fields.char(string="classe")
 
     speed_vacuum = fields.Float(string="Velocidade no vácuo")
     speed_atm_1_1 = fields.Float(string="Velocidade em atm 1:1")
@@ -25,8 +24,8 @@ class SpaceFleetVehicle(models.Model):
     @api.constrains("year")
     def _check_year(self):
         for rec in self:
-            if rec.year and (rec.year < 1800 or rec.year > 4000):
-                raise ValidationError("Ano fora do intervalo (1800 a 4000).")
+            if rec.year and (rec.year < 1800 or rec.year > 3000):
+                raise ValidationError("Ano fora do intervalo (1800 a 3000).")
 
     @api.constrains("speed_vacuum", "speed_atm_1_1", "weight", "height", "length", "width")
     def _check_positive_values(self):
