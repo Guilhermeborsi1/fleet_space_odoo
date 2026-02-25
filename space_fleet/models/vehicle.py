@@ -10,6 +10,7 @@ class SpaceFleetVehicle(models.Model):
     name = fields.Char(string="Nome", required=True)
     manufacturer = fields.Char(string="Fabricante")
     year = fields.Integer(string="Ano")
+    cls = fields.char(string="classe")
 
     speed_vacuum = fields.Float(string="Velocidade no vácuo")
     speed_atm_1_1 = fields.Float(string="Velocidade em atm 1:1")
