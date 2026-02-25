@@ -10,6 +10,7 @@
                 <field name="name"/>
                 <field name="manufacturer"/>
                 <field name="year"/>
+                <field name="cls"/>
                 <field name="speed_vacuum"/>
                 <field name="speed_atm_1_1"/>
                 <field name="active"/>
@@ -35,6 +36,7 @@
                             <field name="manufacturer"/>
                             <field name="year"/>
                             <field name="active"/>
+                            <field name="cls"/>
                         </group>
                     </group>
 
