@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- LIST VIEW (Odoo 19 usa <list>) -->
+    <record id="view_space_fleet_vehicle_list" model="ir.ui.view">
+        <field name="name">space.fleet.vehicle.list</field>
+        <field name="model">space.fleet.vehicle</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="manufacturer"/>
+                <field name="year"/>
+                <field name="speed_vacuum"/>
+                <field name="speed_atm_1_1"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_space_fleet_vehicle_form" model="ir.ui.view">
+        <field name="name">space.fleet.vehicle.form</field>
+        <field name="model">space.fleet.vehicle</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="manufacturer"/>
+                            <field name="year"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Velocidades">
+                            <group>
+                                <field name="speed_vacuum"/>
+                                <field name="speed_atm_1_1"/>
+                            </group>
+                        </page>
+
+                        <page string="Dimensões e Peso">
+                            <group>
+                                <field name="weight"/>
+                                <field name="height"/>
+                                <field name="length"/>
+                                <field name="width"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_space_fleet_vehicle" model="ir.actions.act_window">
+        <field name="name">Veículos</field>
+        <field name="res_model">space.fleet.vehicle</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- MENUS -->
+    <menuitem id="menu_space_fleet_root" name="Space Fleet"/>
+    <menuitem id="menu_space_fleet_vehicles"
+              name="Veículos"
+              parent="menu_space_fleet_root"
+              action="action_space_fleet_vehicle"/>
+
+</odoo>
