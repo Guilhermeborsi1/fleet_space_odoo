@@ -2,7 +2,7 @@
     "name": "Space Fleet",
     "name": "Space Fleet",
     "version": "1.0.0",
-    "author": "Guilherme",
+    "author": "Guilherme Borsi",
     "license": "LGPL-3",
     "version": "1.0.0",
     "category": "Operations/Fleet",

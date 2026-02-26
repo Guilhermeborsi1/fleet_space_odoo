@@ -11,6 +11,8 @@
                 <field name="manufacturer"/>
                 <field name="year"/>
                 <field name="cls"/>
+                <field name="speed_min"/>
+                <field name="speed_max"/>
                 <field name="speed_vacuum"/>
                 <field name="speed_atm_1_1"/>
                 <field name="active"/>
@@ -45,6 +47,8 @@
                             <group>
                                 <field name="speed_vacuum"/>
                                 <field name="speed_atm_1_1"/>
+                                <field name="speed_min"/>
+                                <field name="speed_max"/>
                             </group>
                         </page>
 
