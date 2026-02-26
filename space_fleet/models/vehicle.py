@@ -6,7 +6,7 @@ class SpaceFleetVehicle(models.Model):
     _name = "space.fleet.vehicle"
     _description = "Veículo (Space Fleet)"
     _order = "name asc"
-    #teste
+    
 
     name = fields.Char(string="Nome", required=True)
     manufacturer = fields.Char(string="Fabricante")
