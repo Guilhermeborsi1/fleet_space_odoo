@@ -34,21 +34,6 @@ class SpaceFleetVehicle(models.Model):
 
     active = fields.Boolean(default=True)
 
-    # --- Regra de negócio: se speed_min > 200 => cls = military ---
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get("speed_min", 0) > 200:
-                vals["cls"] = "military"
-        return super().create(vals_list)
-
-    def write(self, vals):
-        # Só recalcula se speed_min estiver sendo alterado nesta escrita
-        if "speed_min" in vals:
-            if vals.get("speed_min", 0) > 200:
-                vals["cls"] = "military"
-        return super().write(vals)
-
     # --- Validações ---
     @api.constrains("year")
     def _check_year(self):
