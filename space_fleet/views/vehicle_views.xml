@@ -80,5 +80,4 @@
               name="Veículos"
               parent="menu_space_fleet_root"
               action="action_space_fleet_vehicle"/>
-
 </odoo>

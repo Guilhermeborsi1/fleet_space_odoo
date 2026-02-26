@@ -6,14 +6,24 @@ class SpaceFleetVehicle(models.Model):
     _name = "space.fleet.vehicle"
     _description = "Veículo (Space Fleet)"
     _order = "name asc"
-    
 
     name = fields.Char(string="Nome", required=True)
     manufacturer = fields.Char(string="Fabricante")
     year = fields.Integer(string="Ano")
-    cls = fields.Char(string="classe")
-    speed_min = fields.Float(string="velocidade minima")
-    speed_max = fields.Float(string="velocidade maxima")
+
+    cls = fields.Selection(
+        [
+            ("civil", "Civil"),
+            ("military", "Military"),
+            ("cargo", "Cargo"),
+            ("explorer", "Explorer"),
+        ],
+        string="Classe",
+        default="civil",
+    )
+
+    speed_min = fields.Float(string="Velocidade mínima")
+    speed_max = fields.Float(string="Velocidade máxima")
     speed_vacuum = fields.Float(string="Velocidade no vácuo")
     speed_atm_1_1 = fields.Float(string="Velocidade em atm 1:1")
 
@@ -24,16 +34,38 @@ class SpaceFleetVehicle(models.Model):
 
     active = fields.Boolean(default=True)
 
+    # --- Regra de negócio: se speed_min > 200 => cls = military ---
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("speed_min", 0) > 200:
+                vals["cls"] = "military"
+        return super().create(vals_list)
+
+    def write(self, vals):
+        # Só recalcula se speed_min estiver sendo alterado nesta escrita
+        if "speed_min" in vals:
+            if vals.get("speed_min", 0) > 200:
+                vals["cls"] = "military"
+        return super().write(vals)
+
+    # --- Validações ---
     @api.constrains("year")
     def _check_year(self):
         for rec in self:
             if rec.year and (rec.year < 1800 or rec.year > 3000):
                 raise ValidationError("Ano fora do intervalo (1800 a 3000).")
 
-    @api.constrains("speed_vacuum", "speed_atm_1_1", "weight", "height", "length", "width")
+    @api.constrains(
+        "speed_min", "speed_max", "speed_vacuum", "speed_atm_1_1",
+        "weight", "height", "length", "width"
+    )
     def _check_positive_values(self):
         for rec in self:
-            for fname in ["speed_vacuum", "speed_atm_1_1", "weight", "height", "length", "width"]:
+            for fname in [
+                "speed_min", "speed_max", "speed_vacuum", "speed_atm_1_1",
+                "weight", "height", "length", "width"
+            ]:
                 val = rec[fname]
                 if val is not None and val < 0:
                     raise ValidationError("Valores numéricos não podem ser negativos.")
